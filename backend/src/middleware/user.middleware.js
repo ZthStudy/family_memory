@@ -11,8 +11,6 @@ const verifyUser = async (ctx, next) => {
 
   // 1.1 用户名和密码不能为空
   if (!name || !password) {
-    console.log({ ddd: ctx.app.emit })
-
     return ctx.app.emit('error', NAME_OR_PASSWORD_NOT_NULL, ctx)
   }
 
