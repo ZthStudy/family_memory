@@ -18,6 +18,10 @@ class loginController {
       token,
     }
   }
+
+  async test(ctx) {
+    ctx.body = 'token 有效'
+  }
 }
 
 module.exports = new loginController()

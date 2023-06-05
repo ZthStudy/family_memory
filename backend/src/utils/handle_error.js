@@ -3,6 +3,7 @@ const {
   NAME_OR_PASSWORD_NOT_NULL,
   NAME_EXISTS,
   NAME_NOT_EXISTS,
+  INVALID_TOKEN,
 } = require('../config/err_contants')
 app.on('error', (error, ctx) => {
   // console.log({ error })
@@ -17,11 +18,17 @@ app.on('error', (error, ctx) => {
     case NAME_EXISTS:
       code = -1102
       message = '用户名已存在'
+      break
 
     case NAME_NOT_EXISTS:
       code = -1103
       message = '用户名不存在'
+      break
 
+    case INVALID_TOKEN:
+      code = -1104
+      message = '无效的token'
+      break
     default:
       break
   }

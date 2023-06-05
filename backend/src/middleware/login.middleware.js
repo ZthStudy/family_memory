@@ -2,9 +2,12 @@ const {
   NAME_OR_PASSWORD_NOT_NULL,
   NAME_NOT_EXISTS,
   PASSWORD_INCORRECT,
+  INVALID_TOKEN,
 } = require('../config/err_contants')
 const userService = require('../service/user.service')
 const md5Pwd = require('../utils/md5_pwd')
+const jwt = require('jsonwebtoken')
+const { publicKey } = require('../utils/secret')
 
 const verifyLogin = async (ctx, next) => {
   // 1. 是否非法
@@ -35,4 +38,23 @@ const verifyLogin = async (ctx, next) => {
   await next()
 }
 
-module.exports = { verifyLogin }
+const verifyToken = async (ctx, next) => {
+  const token = ctx.headers.authorization.replace('Bearer ', '')
+
+  // console.log({ token })
+
+  // jwt 效验
+  try {
+    const user = jwt.verify(token, publicKey, {
+      algorithms: ['RS256'],
+    })
+
+    ctx.user = user
+
+    await next()
+  } catch (err) {
+    ctx.app.emit('error', INVALID_TOKEN, ctx)
+  }
+}
+
+module.exports = { verifyLogin, verifyToken }
