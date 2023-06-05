@@ -2,10 +2,11 @@ const app = require('../app')
 const {
   NAME_OR_PASSWORD_NOT_NULL,
   NAME_EXISTS,
+  NAME_NOT_EXISTS,
 } = require('../config/err_contants')
 app.on('error', (error, ctx) => {
-  console.log({error});
-  
+  // console.log({ error })
+
   let code = 1000
   let message = ''
   switch (error) {
@@ -16,6 +17,10 @@ app.on('error', (error, ctx) => {
     case NAME_EXISTS:
       code = -1102
       message = '用户名已存在'
+
+    case NAME_NOT_EXISTS:
+      code = -1103
+      message = '用户名不存在'
 
     default:
       break

@@ -5,7 +5,7 @@ const md5Pwd = (password) => {
   console.log({ md5 })
 
   const md5Password = md5.update(password + '').digest('hex')
-  console.log({ md5Password })
+  // console.log({ md5Password })
 
   return md5Password
 }

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon ./src/main"
+    "serve": "nodemon ./src/main",
+    "gen_file": "node ./src/script/auto_gen_file"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
   "dependencies": {
     "@koa/router": "^12.0.0",
     "dotenv": "^16.1.1",
+    "jsonwebtoken": "8.5.1",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.0",
     "mysql2": "^3.3.3"
