@@ -11,10 +11,27 @@ class MomentService {
     return res
   }
 
-  async query(value) {
-    const statement = 'SELECT * FROM `moment` WHERE name = ?;'
+  async query(ctx) {
+    const { size = 10, offet = 0 } = ctx.query
 
-    const [res] = await connection.execute(statement, [value])
+    const statement = `
+    SELECT
+    moment.id id,
+    moment.content content,
+    moment.user_id user_id,
+    moment.createdAt createdAt,
+    moment.updatedAt updatedAt,
+    JSON_OBJECT( 'name', user.name, 'id', user.id ) AS 'user' 
+    FROM
+    moment
+    LEFT JOIN user ON moment.user_id = user.id 
+    LIMIT ? OFFSET ?;
+    `
+
+    const [res] = await connection.execute(statement, [
+      String(size),
+      String(offet),
+    ])
     console.log(res)
     return res
   }

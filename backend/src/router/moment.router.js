@@ -7,4 +7,7 @@ const momentRouter = new KoaRouter({ prefix: '/moment' })
 // 创建动态
 momentRouter.post('/', verifyToken, momentController.create)
 
+// 查询动态列表
+momentRouter.get('/', momentController.list)
+
 module.exports = momentRouter

@@ -10,6 +10,16 @@ class MomentController {
     const data = await momentService.create(moment, ctx)
 
     ctx.body = {
+      code: 1,
+      data,
+    }
+  }
+
+  async list(ctx, next) {
+    const data = await momentService.query(ctx)
+
+    ctx.body = {
+      code: 1,
       data,
     }
   }
