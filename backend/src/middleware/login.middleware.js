@@ -39,22 +39,24 @@ const verifyLogin = async (ctx, next) => {
 }
 
 const verifyToken = async (ctx, next) => {
-  const token = ctx.headers.authorization.replace('Bearer ', '')
-
+  const token = ctx.headers.authorization?.replace('Bearer ', '')
   // console.log({ token })
 
+  // if (!token) return ctx.app.emit('error', INVALID_TOKEN, ctx)
+
   // jwt 效验
-  try {
-    const user = jwt.verify(token, publicKey, {
-      algorithms: ['RS256'],
-    })
+  const user = jwt.verify(token, publicKey, {
+    algorithms: ['RS256'],
+  })
 
-    ctx.user = user
-
-    await next()
-  } catch (err) {
-    ctx.app.emit('error', INVALID_TOKEN, ctx)
+  if (!user) {
+    return ctx.app.emit('error', INVALID_TOKEN, ctx)
   }
+  console.log({ user })
+
+  ctx.user = user
+
+  await next()
 }
 
 module.exports = { verifyLogin, verifyToken }

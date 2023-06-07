@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { privateKey } = require('../utils/secret')
 
-class loginController {
+class LoginController {
   async sign(ctx, next) {
     // 获取数据
     const { name, id } = ctx.user
@@ -24,4 +24,4 @@ class loginController {
   }
 }
 
-module.exports = new loginController()
+module.exports = new LoginController()
