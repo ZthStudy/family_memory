@@ -24,4 +24,13 @@ momentRouter.patch(
   momentController.update
 )
 
+// 删除动态
+
+momentRouter.delete(
+  '/:momentId',
+  verifyToken,
+  verifyMomentPermission,
+  momentController.delete
+)
+
 module.exports = momentRouter

@@ -78,6 +78,21 @@ class MomentService {
       console.log({ error })
     }
   }
+
+  async delete(ctx) {
+    try {
+      const { momentId } = ctx.params
+
+      const statement = `
+      DELETE FROM moment WHERE moment.id = ?;
+      `
+
+      const [res] = await connection.execute(statement, [momentId])
+      return res
+    } catch (error) {
+      console.log({ error })
+    }
+  }
 }
 
 module.exports = new MomentService()

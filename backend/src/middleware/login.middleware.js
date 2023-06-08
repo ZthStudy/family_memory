@@ -42,7 +42,7 @@ const verifyToken = async (ctx, next) => {
   const token = ctx.headers.authorization?.replace('Bearer ', '')
   // console.log({ token })
 
-  // if (!token) return ctx.app.emit('error', INVALID_TOKEN, ctx)
+  if (!token) return ctx.app.emit('error', INVALID_TOKEN, ctx)
 
   // jwt 效验
   const user = jwt.verify(token, publicKey, {

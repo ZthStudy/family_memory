@@ -41,6 +41,21 @@ class MomentController {
       data: data,
     }
   }
+
+  async delete(ctx, next) {
+    try {
+      const data = await momentService.delete(ctx)
+
+      console.log({ data })
+
+      ctx.body = {
+        code: 1,
+        data,
+      }
+    } catch (error) {
+      console.log({ controller_error: error })
+    }
+  }
 }
 
 module.exports = new MomentController()
