@@ -23,6 +23,24 @@ class MomentController {
       data,
     }
   }
+
+  async detail(ctx, next) {
+    const data = await momentService.queryDetail(ctx)
+
+    ctx.body = {
+      code: 1,
+      data: data[0],
+    }
+  }
+
+  async update(ctx, next) {
+    const data = await momentService.update(ctx)
+
+    ctx.body = {
+      code: 1,
+      data: data,
+    }
+  }
 }
 
 module.exports = new MomentController()

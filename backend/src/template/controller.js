@@ -2,13 +2,17 @@ const templateService = require('../service/template.service')
 
 class templateController {
   async create(ctx, next) {
-    // 获取数据
-    const template = ctx.request.body
+    try {
+      // 获取数据
+      const template = ctx.request.body
 
-    const data = await templateService.create(template)
+      const data = await templateService.create(template)
 
-    ctx.body = {
-      data,
+      ctx.body = {
+        data,
+      }
+    } catch (error) {
+      console.log({ controller_error: error })
     }
   }
 }

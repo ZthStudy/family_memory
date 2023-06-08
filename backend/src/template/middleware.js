@@ -1,7 +1,11 @@
 const template = async (ctx, next) => {
-  const template = ctx.request.body
+  try {
+    const template = ctx.request.body
 
-  await next()
+    await next()
+  } catch (error) {
+    console.log({ middleware_error: error })
+  }
 }
 
 module.exports = { template }

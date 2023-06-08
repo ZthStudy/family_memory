@@ -4,6 +4,7 @@ const {
   NAME_EXISTS,
   NAME_NOT_EXISTS,
   INVALID_TOKEN,
+  NO_PERSSION,
 } = require('../config/err_contants')
 app.on('error', (error, ctx) => {
   // console.log({ error })
@@ -28,6 +29,10 @@ app.on('error', (error, ctx) => {
     case INVALID_TOKEN:
       code = -1104
       message = '无效的token'
+      break
+    case NO_PERSSION:
+      code = -1105
+      message = '没有权限'
       break
     default:
       break
