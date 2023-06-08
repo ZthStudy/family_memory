@@ -1,9 +1,7 @@
 const KoaRouter = require('@koa/router')
 const momentController = require('../controller/moment.controller')
 const { verifyToken } = require('../middleware/login.middleware')
-const {
-  verifyMomentPermission,
-} = require('../middleware/permission.middleware')
+const { verifyPermission } = require('../middleware/permission.middleware')
 
 const momentRouter = new KoaRouter({ prefix: '/moment' })
 
@@ -20,7 +18,7 @@ momentRouter.get('/:momentId', momentController.detail)
 momentRouter.patch(
   '/:momentId',
   verifyToken,
-  verifyMomentPermission,
+  verifyPermission,
   momentController.update
 )
 
@@ -29,7 +27,7 @@ momentRouter.patch(
 momentRouter.delete(
   '/:momentId',
   verifyToken,
-  verifyMomentPermission,
+  verifyPermission,
   momentController.delete
 )
 

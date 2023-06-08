@@ -1,14 +1,14 @@
 const connection = require('../database')
 
 class PermissionService {
-  async moment(momentId, userId) {
+  async verify(resourceName, resourceId, userId) {
     try {
       const statement = `
-      SELECT * FROM moment WHERE moment.id = ? AND moment.user_id = ?;
+      SELECT * FROM ${resourceName} WHERE id = ? AND user_id = ?;
     `
-      const [res] = await connection.execute(statement, [momentId, userId])
+      const [res] = await connection.execute(statement, [resourceId, userId])
 
-      console.log({ res })
+      // console.log({ res })
 
       return !!res[0]
     } catch (error) {

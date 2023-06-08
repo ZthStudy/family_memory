@@ -3,13 +3,22 @@
 const { NO_PERSSION } = require('../config/err_contants')
 const permissionService = require('../service/permission.service')
 
-const verifyMomentPermission = async (ctx, next) => {
+const verifyPermission = async (ctx, next) => {
   try {
-    const { momentId } = ctx.params
-
     const { id } = ctx.user
 
-    const hasPermission = await permissionService.moment(momentId, id)
+    // 动态路径参数
+    const key = Object.keys(ctx.params)[0]
+
+    const resourceName = key.replace('Id', '')
+
+    const resourceId = ctx.params[key]
+
+    const hasPermission = await permissionService.verify(
+      resourceName,
+      resourceId,
+      id
+    )
 
     if (!hasPermission) {
       return ctx.app.emit('error', NO_PERSSION, ctx)
@@ -21,4 +30,4 @@ const verifyMomentPermission = async (ctx, next) => {
   }
 }
 
-module.exports = { verifyMomentPermission }
+module.exports = { verifyPermission }
