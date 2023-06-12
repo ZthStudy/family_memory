@@ -29,7 +29,7 @@ class MomentController {
 
     ctx.body = {
       code: 1,
-      data: data[0],
+      data: data,
     }
   }
 

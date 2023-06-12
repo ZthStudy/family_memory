@@ -9,6 +9,7 @@ class templateController {
       const data = await templateService.create(template)
 
       ctx.body = {
+        code: 1,
         data,
       }
     } catch (error) {

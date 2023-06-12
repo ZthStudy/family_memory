@@ -8,7 +8,7 @@ class LoginController {
 
     // 颁发签名
     const token = jwt.sign({ name, id }, privateKey, {
-      expiresIn: 24 * 60 * 60,
+      expiresIn: 24 * 60 * 60 * 3, // three day
       algorithm: 'RS256',
     })
 

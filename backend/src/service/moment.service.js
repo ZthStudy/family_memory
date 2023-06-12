@@ -16,15 +16,16 @@ class MomentService {
 
     const statement = `
     SELECT
-    moment.id id,
-    moment.content content,
-    moment.user_id user_id,
-    moment.createdAt createdAt,
-    moment.updatedAt updatedAt,
-    JSON_OBJECT( 'name', user.name, 'id', user.id ) AS 'user' 
-    FROM
-    moment
-    LEFT JOIN user ON moment.user_id = user.id 
+    m.id id,
+    m.content content,
+    m.user_id user_id,
+    m.createdAt createdAt,
+    m.updatedAt updatedAt,
+    JSON_OBJECT( 'name', USER.NAME, 'id', USER.id ) AS 'user' ,
+    (SELECT COUNT(*)  FROM comment WHERE comment.moment_id = m.id) commentCount
+  FROM
+    moment m
+    LEFT JOIN USER ON m.user_id = USER.id 
     LIMIT ? OFFSET ?;
     `
 
@@ -42,20 +43,43 @@ class MomentService {
 
       const statement = `
       SELECT
-      moment.id id,
-      moment.content content,
-      moment.user_id user_id,
-      moment.createdAt createdAt,
-      moment.updatedAt updatedAt,
-      JSON_OBJECT( 'name', USER.NAME, 'id', USER.id ) AS 'user' 
+      m.id id,
+      m.content content,
+      m.user_id user_id,
+      m.createdAt createdAt,
+      m.updatedAt updatedAt,
+      JSON_OBJECT( 'name', u.NAME, 'id', u.id ) AS 'user',
+      (
+      SELECT
+        JSON_ARRAYAGG(JSON_OBJECT( 'id', file.id, 'filename', file.filename, 'userId', file.user_id, 'momentId', file.moment_id )) 
       FROM
-        moment
-        LEFT JOIN USER ON moment.user_id = USER.id 
+        file
       WHERE
-        moment.id = ?;
+        file.moment_id = ?
+      ) files,
+      (
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id',
+            cm.id,
+            'content',
+            cm.content,
+            'comment_id',
+            cm.comment_id,
+            'user',
+          JSON_OBJECT( 'name', cu.NAME, 'id', cu.id )))) comments 
+    FROM
+      moment m
+      LEFT JOIN USER u ON m.user_id = u.id
+      LEFT JOIN COMMENT cm ON cm.moment_id = m.id
+      LEFT JOIN USER cu ON cu.id = cm.user_id 
+    WHERE
+      m.id = ?
+      GROUP BY
+	    m.id;
       `
 
-      const [res] = await connection.execute(statement, [momentId])
+      const [res] = await connection.execute(statement, [momentId,momentId])
       return res
     } catch (error) {
       console.log({ error })
