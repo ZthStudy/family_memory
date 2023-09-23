@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "nodemon ./src/main",
-    "gen_file": "node ./src/script/auto_gen_file"
+    "gen_file": "node ./src/script/auto_gen_file",
+    "start": "docker-compose up"
   },
   "keywords": [],
   "author": "",

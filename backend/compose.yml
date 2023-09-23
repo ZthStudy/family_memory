@@ -1,0 +1,17 @@
+services:
+  family-momery:
+    build: .
+    restart: always
+    ports:
+      - "8001:8001"
+    depends_on:
+      - family-momery-mysql
+  family-momery-mysql:
+    image: mysql:5.5
+    environment:
+      MYSQL_ROOT_PASSWORD: "zth@123456"
+      MYSQL_DATABASE: "family_memory"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "zth@123456"
+    ports:
+      - "3302:3306"

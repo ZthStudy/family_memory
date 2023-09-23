@@ -1,8 +1,8 @@
 const mysql = require('mysql2')
 
 const connectionPool = mysql.createPool({
-  host: 'localhost',
-  port: 3306,
+  host: 'family-momery-mysql',
+  // port: 3306,
   database: 'family_memory',
   user: 'root',
   password: 'zth@123456',

@@ -5,5 +5,5 @@ const app = require('./app')
 require('./utils/handle_error')
 
 app.listen(SERVER_PORT, () => {
-  console.log('familyMemory服务已启动')
+  console.log(`familyMemory服务已启动${SERVER_PORT}端口`)
 })
